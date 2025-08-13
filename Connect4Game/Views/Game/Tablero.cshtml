@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Partida Connect4";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<p class="text-center">Turno del Jugador: <strong id="turnoActual">Jugador 1 (Rojo)</strong></p>
+
+<!-- Tabla del tablero centrada -->
+<div class="text-center">
+    <table id="tablero">
+        @for (int fila = 0; fila < 6; fila++)
+        {
+            <tr>
+                @for (int col = 0; col < 7; col++)
+                {
+                    <td id="celda-@fila-@col" onclick="jugar(@col)">
+                        <div class="disco-base"></div>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+</div>
