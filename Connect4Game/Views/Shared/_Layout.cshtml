@@ -4,46 +4,58 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Connect4Game</title>
-    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Connect4Game.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StyleTablero.css" />
 
+    <!-- Fuente estilo juego -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Estilo personalizado -->
+    <link rel="stylesheet" href="~/css/game-style.css" />
 </head>
-<body>
+<body class="game-bg">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark shadow-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Connect4Game</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand game-title" asp-area="" asp-controller="Home" asp-action="Index">🎮 Connect4Game</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link inicio" asp-area="" asp-controller="Home" asp-action="Index">Inicio  |</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link crear-jugador" asp-area="" asp-controller="Home" asp-action="Privacy">Crear Jugador  |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link marcadores" asp-area="" asp-controller="Home" asp-action="Privacy">Marcadores  |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link partidas" asp-area="" asp-controller="Home" asp-action="Privacy">Partidas Registradas  |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link crear-partida" asp-area="" asp-controller="Home" asp-action="Privacy">Crear Partida</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Connect4Game - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <main role="main" class="pb-3">
+        <div class="container text-center mt-5">
+            @RenderBody()
         </div>
+    </main>
+
+    <footer class="footer text-center text-light py-3">
+        &copy; 2025 - Connect4Game - <a class="text-warning" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

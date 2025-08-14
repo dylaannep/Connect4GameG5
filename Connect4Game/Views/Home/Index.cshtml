@@ -2,7 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="game-heading">Bienvenido a Conecta 4</h1>
+<p class="game-subtitle">Selecciona una opción para comenzar.</p>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-2 mb-3">
+        <a href="/Partida/Crear" class="btn btn-game btn-primary w-100">🎯 Crear Partida</a>
+    </div>
+    <div class="col-md-2 mb-3">
+        <a href="/Jugador/Index" class="btn btn-game btn-secondary w-100">👥 Ver Jugadores</a>
+    </div>
+    <div class="col-md-2 mb-3">
+        <a href="/Partida/Registro" class="btn btn-game btn-info w-100">📜 Registro</a>
+    </div>
+    <div class="col-md-2 mb-3">
+        <a href="/Marcador/Index" class="btn btn-game btn-success w-100">🏆 Marcadores</a>
+    </div>
 </div>
