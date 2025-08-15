@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Connect4Game.Controllers
 {
@@ -10,11 +11,24 @@ namespace Connect4Game.Controllers
         {
             _context = context;
         }
-
-        public IActionResult Index()
+        /*
+                public IActionResult Index()
+                {
+                    ViewData["Title"] = "Lista de Jugadores";
+                    return View();
+                }
+        */
+        public async Task<IActionResult> Index()
         {
             ViewData["Title"] = "Lista de Jugadores";
-            return View();
+
+            var jugadores_vm = new JugadorViewModel
+            {
+                Jugadores = await _context.Jugadores.ToListAsync(),
+                NuevoJugador = new JugadorModel()
+            };
+            return View(jugadores_vm);
+            
         }
 
 
@@ -22,7 +36,8 @@ namespace Connect4Game.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre,Identificacion")] JugadorModel jugador)
+        //public async Task<IActionResult> Create([Bind("Nombre,Identificacion")] JugadorModel jugador)
+public async Task<IActionResult> Create(JugadorModel jugador)
         {
             if (ModelState.IsValid)
             {
@@ -31,12 +46,16 @@ namespace Connect4Game.Controllers
                 {
                     ModelState.AddModelError("Identificacion", "La identificación ya existe.");
                     ViewBag.MostrarModal = true;
-TempData["Mensaje"] = "La identificación ya existe.";
-                   return View("Index", jugador);
+                    //TempData["Mensaje"] = "La identificación ya existe.";
+                    return View("Index", jugador);
                 }
                 _context.Jugadores.Add(jugador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                 ViewBag.MostrarModal = true;
             }
             return View("Index", jugador);
         }

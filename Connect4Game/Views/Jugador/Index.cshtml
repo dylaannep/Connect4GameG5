@@ -1,29 +1,63 @@
+@model JugadorViewModel
 @{
     ViewData["Title"] = "Lista de Jugadores";
 }
 
-<h2>Jugadores</h2>
+<div class="container mt-4">
+    <div class="row align-items-center mb-5">
+        <div class="col">
+            <h2 class="mb-0">Jugadores</h2>
+        </div>
+        <div class="col-md-2 col-sm-4 col-6 text-end">
+            <button class="btn btn-game btn-primary w-100" role="button" data-bs-toggle="modal"
+                data-bs-target="#modalCrearJugador">
+                <span class="text">Añadir 👥</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabla de jugadores -->
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Marcador</th>
+                        <th>Victorias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var jugador in Model.Jugadores)
+                    {
+                        <tr class="text-light">
+                            <td>@jugador.Identificacion</td>
+                            <td>@jugador.Nombre</td>
+                            <td>@jugador.Marcador</td>
+                            <td>@jugador.Victorias</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
-<button class="button-48 bg-add" role="button" data-bs-toggle="modal"
-                                data-bs-target="#modalCrearJugador"><span
-                    class="text">Añadir <i class="fa-solid fa-plus"></i></span></button>
-<p>@ViewData["MostrarModal"]</p>
-<p>@ViewBag.MostrarModal</p>
-<!-- Tabla de marcadores -->
-@await Html.PartialAsync("_CreatePlayerModal")
+@await Html.PartialAsync("_CreatePlayerModal", new JugadorModel())
 
 
- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const abrirModal = urlParams.get('modal');
-    if (abrirModal === 'true') {
-        const modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
-        modal.show();
-    }
-});
-</script> 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const abrirModal = urlParams.get('modal');
+        if (abrirModal === 'true') {
+            const modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
+            modal.show();
+        }
+    });
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
