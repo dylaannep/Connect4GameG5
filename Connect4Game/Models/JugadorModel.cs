@@ -8,9 +8,9 @@ public class JugadorModel
 
     [Required]
 
-    [RegularExpression(@"^\d{9}$", ErrorMessage = "La cédula debe tener exactamente 9 dígitos.")]
-    //La cedula debe de ser unica
-    public int Cedula { get; set; }
+    [RegularExpression(@"^\d{9}$", ErrorMessage = "La identificación debe tener exactamente 9 dígitos.")]
+    //La identificación debe de ser unica
+    public int Identificacion { get; set; }
 
     [Required]
     public string Nombre { get; set; }

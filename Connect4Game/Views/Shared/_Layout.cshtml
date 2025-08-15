@@ -33,12 +33,13 @@
                         <li class="nav-item">
                             <a class="nav-link inicio" asp-area="" asp-controller="Home" asp-action="Index">Inicio |</a>
                         </li>
-                        <li class="nav-item">
+                         @*<li class="nav-item">
                             <button type="button" class="nav-link btn btn-link crear-jugador" data-bs-toggle="modal"
                                 data-bs-target="#modalCrearJugador">
                                 Crear Jugador |
                             </button>
                         </li>
+                        *@
                         @* <li class="nav-item">
                             <a class="nav-link crear-jugador" asp-area="" asp-controller="Jugador"
                                 asp-action="Index">Crear Jugador |</a>
@@ -81,6 +82,29 @@
     <script src="~/js/Tablero.js"></script>
 
     @await Html.PartialAsync("_CreatePlayerModal")
+    <script>
+        $('#formCrearJugador').submit(function(e){
+            e.preventDefault();
+            var form = $(this);
+
+            $.post(form.attr('action'), form.serialize())
+                .done(function(result){
+                    // Reemplaza el contenido de la modal
+                    $('#modalCrearJugador .modal-content').html(result);
+
+                    // Inicializa de nuevo la modal
+                    var modalEl = document.getElementById('modalCrearJugador');
+                    var myModal = bootstrap.Modal.getInstance(modalEl); // intenta obtener instancia
+                    if (!myModal) {
+                        myModal = new bootstrap.Modal(modalEl); // si no existe, crea una nueva
+                    }
+                    myModal.show(); // mostrar modal con el nuevo contenido
+                });
+        });
+
+    </script>
+
+
 </body>
 
 </html>

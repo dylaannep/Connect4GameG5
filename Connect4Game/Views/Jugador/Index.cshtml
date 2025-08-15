@@ -5,7 +5,9 @@
 <h2>Jugadores</h2>
 
 
-<button class="button-48 bg-add" role="button" data-bs-toggle="modal" data-bs-target="#modalCrear"><span
+<button class="button-48 bg-add" role="button" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearJugador"><span
                     class="text">Añadir <i class="fa-solid fa-plus"></i></span></button>
 
-@await Html.PartialAsync("_CreateModal")
+<!-- Tabla de marcadores -->
+@await Html.PartialAsync("_CreatePlayerModal")

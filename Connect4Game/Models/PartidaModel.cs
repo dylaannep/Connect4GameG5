@@ -18,13 +18,19 @@ public class PartidaModel
     [ForeignKey("Jugador1Id")]
     public JugadorModel Jugador1 { get; set; }
 
+
     [Required]
     public int Jugador2Id { get; set; }
     [ForeignKey("Jugador2Id")]
     public JugadorModel Jugador2 { get; set; }
 
+
     [Required]
     public string Tablero { get; set; } // JSON que representa la matriz
+
+    public int ? GanadorId { get; set; }
+    [ForeignKey("GanadorId")]
+    public JugadorModel Ganador { get; set; }
 
     public int TurnoGuardado { get; set; }
 

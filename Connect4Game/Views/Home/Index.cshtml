@@ -10,13 +10,14 @@
             <a href="/Partida/Crear" class="btn btn-game btn-primary w-100">🎯 Crear Partida</a>
         </div>
         <div class="col-md-2 mb-3">
-            <a href="/Jugador/Index" class="btn btn-game btn-secondary w-100">👥 Ver Jugadores</a>
+            <a class="btn btn-game btn-secondary w-100" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearJugador">👥 Crear Jugador</a>
         </div>
         <div class="col-md-2 mb-3">
-            <a href="/Partida/Registro" class="btn btn-game btn-info w-100">📜 Registro</a>
+            <a href="/Partida/Registro" class="btn btn-game btn-info w-100">📜 Partidas Registro </a>
         </div>
         <div class="col-md-2 mb-3">
-            <a href="/Marcador/Index" class="btn btn-game btn-success w-100">🏆 Marcadores</a>
+            <a asp-controller="Jugador" asp-action="Index" class="btn btn-game btn-success w-100">🏆 Marcadores</a>
         </div>
     </div>
 
