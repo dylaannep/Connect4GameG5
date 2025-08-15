@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Connect4Game.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StyleTablero.css" />
+    <link rel="stylesheet" href="~/css/modalPlayer.css" />
 
     <!-- Fuente estilo juego -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -15,31 +17,46 @@
     <!-- Estilo personalizado -->
     <link rel="stylesheet" href="~/css/game-style.css" />
 </head>
+
 <body class="game-bg">
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark shadow-lg">
             <div class="container-fluid">
-                <a class="navbar-brand game-title" asp-area="" asp-controller="Home" asp-action="Index">🎮 Connect4Game</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                <a class="navbar-brand game-title" asp-area="" asp-controller="Home" asp-action="Index">🎮
+                    Connect4Game</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link inicio" asp-area="" asp-controller="Home" asp-action="Index">Inicio  |</a>
+                            <a class="nav-link inicio" asp-area="" asp-controller="Home" asp-action="Index">Inicio |</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link crear-jugador" asp-area="" asp-controller="Home" asp-action="Privacy">Crear Jugador  |</a>
+                            <button type="button" class="nav-link btn btn-link crear-jugador" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearJugador">
+                                Crear Jugador |
+                            </button>
+                        </li>
+                        @* <li class="nav-item">
+                            <a class="nav-link crear-jugador" asp-area="" asp-controller="Jugador"
+                                asp-action="Index">Crear Jugador |</a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link marcadores" asp-area="" asp-controller="Home"
+                                asp-action="Privacy">Marcadores |</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link marcadores" asp-area="" asp-controller="Home" asp-action="Privacy">Marcadores  |</a>
+                            <a class="nav-link partidas" asp-area="" asp-controller="Home" asp-action="Privacy">Partidas
+                                Registradas |</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link partidas" asp-area="" asp-controller="Home" asp-action="Privacy">Partidas Registradas  |</a>
+                            <a class="nav-link crear-partida" asp-area="" asp-controller="Home"
+                                asp-action="Privacy">Crear Partida</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link crear-partida" asp-area="" asp-controller="Home" asp-action="Privacy">Crear Partida</a>
-                        </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -53,7 +70,8 @@
     </main>
 
     <footer class="footer text-center text-light py-3">
-        &copy; 2025 - Connect4Game - <a class="text-warning" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; 2025 - Connect4Game - <a class="text-warning" asp-area="" asp-controller="Home"
+            asp-action="Privacy">Privacy</a>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -61,5 +79,8 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script src="~/js/Tablero.js"></script>
+
+    @await Html.PartialAsync("_CreatePlayerModal")
 </body>
+
 </html>
