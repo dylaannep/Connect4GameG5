@@ -18,61 +18,35 @@
     <link rel="stylesheet" href="~/css/game-style.css" />
 </head>
 
-<body class="game-bg">
+<body class="game-bg d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark shadow-lg">
             <div class="container-fluid">
-                <a class="navbar-brand game-title" asp-area="" asp-controller="Home" asp-action="Index">🎮
-                    Connect4Game</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse">
+                <a class="navbar-brand game-title" asp-area="" asp-controller="Home" asp-action="Index">🎮 Connect4Game</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link inicio" asp-area="" asp-controller="Home" asp-action="Index">Inicio |</a>
-                        </li>
-                         @*<li class="nav-item">
-                            <button type="button" class="nav-link btn btn-link crear-jugador" data-bs-toggle="modal"
-                                data-bs-target="#modalCrearJugador">
-                                Crear Jugador |
-                            </button>
-                        </li>
-                        *@
-                        @* <li class="nav-item">
-                            <a class="nav-link crear-jugador" asp-area="" asp-controller="Jugador"
-                                asp-action="Index">Crear Jugador |</a>
-                        </li> *@
-                        <li class="nav-item">
-                            <a class="nav-link marcadores" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Marcadores |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link partidas" asp-area="" asp-controller="Home" asp-action="Privacy">Partidas
-                                Registradas |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link crear-partida" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Crear Partida</a>
-                        </li>
-
-
+                        <li class="nav-item"><a class="nav-link inicio" asp-controller="Home" asp-action="Index">Inicio |</a></li>
+                        <li class="nav-item"><a class="nav-link marcadores" asp-controller="Home" asp-action="Privacy">Marcadores |</a></li>
+                        <li class="nav-item"><a class="nav-link partidas" asp-controller="Home" asp-action="Privacy">Partidas Registradas |</a></li>
+                        <li class="nav-item"><a class="nav-link crear-partida" asp-controller="Home" asp-action="Privacy">Crear Partida</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main role="main" class="pb-3">
-        <div class="container text-center mt-5">
+    <main role="main" class="flex-grow-1">
+        <div class="container text-center py-4">
             @RenderBody()
         </div>
     </main>
 
-    <footer class="footer text-center text-light py-3">
-        &copy; 2025 - Connect4Game - <a class="text-warning" asp-area="" asp-controller="Home"
-            asp-action="Privacy">Privacy</a>
+    <footer class="footer text-center text-light border-top py-3">
+        &copy; 2025 - Connect4Game -
+        <a class="text-warning" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -82,29 +56,24 @@
     <script src="~/js/Tablero.js"></script>
 
     @await Html.PartialAsync("_CreatePlayerModal")
+
     <script>
-        $('#formCrearJugador').submit(function(e){
-            e.preventDefault();
-            var form = $(this);
+      // ¡Delegado! Para que no se pierda al reemplazar el HTML del modal
+      $(document).on('submit', '#formCrearJugador', function (e) {
+          e.preventDefault();
+          var form = $(this);
 
-            $.post(form.attr('action'), form.serialize())
-                .done(function(result){
-                    // Reemplaza el contenido de la modal
-                    $('#modalCrearJugador .modal-content').html(result);
+          $.post(form.attr('action'), form.serialize())
+            .done(function (result) {
+                $('#modalCrearJugador .modal-content').html(result);
 
-                    // Inicializa de nuevo la modal
-                    var modalEl = document.getElementById('modalCrearJugador');
-                    var myModal = bootstrap.Modal.getInstance(modalEl); // intenta obtener instancia
-                    if (!myModal) {
-                        myModal = new bootstrap.Modal(modalEl); // si no existe, crea una nueva
-                    }
-                    myModal.show(); // mostrar modal con el nuevo contenido
-                });
-        });
-
+                var modalEl = document.getElementById('modalCrearJugador');
+                var myModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                myModal.show();
+            });
+      });
     </script>
-
-
 </body>
+
 
 </html>

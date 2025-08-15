@@ -40,9 +40,14 @@ button.accept-policy {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
+  position: static;     /* ← clave para que no tape contenido */
   width: 100%;
   white-space: nowrap;
-  line-height: 60px;
+  line-height: 1.6;
+  padding: .75rem 0;
 }
+
+/* Por si hay superposiciones */
+.navbar { z-index: 1030; }
+.dropdown-menu { z-index: 1000; }
+.modal { z-index: 1050; }
