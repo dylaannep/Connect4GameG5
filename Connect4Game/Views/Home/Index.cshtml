@@ -10,8 +10,9 @@
             <a href="/Partida/Crear" class="btn btn-game btn-primary w-100">🎯 Crear Partida</a>
         </div>
         <div class="col-md-2 mb-3">
-            <a class="btn btn-game btn-secondary w-100" data-bs-toggle="modal"
-                                data-bs-target="#modalCrearJugador">👥 Crear Jugador</a>
+            <a asp-controller="Jugador" asp-action="Index" asp-route-modal="true" class="btn btn-game btn-secondary w-100">
+    👥 Crear Jugador
+</a>
         </div>
         <div class="col-md-2 mb-3">
             <a href="/Partida/Registro" class="btn btn-game btn-info w-100">📜 Partidas Registro </a>
@@ -22,3 +23,5 @@
     </div>
 
 </div>
+
+

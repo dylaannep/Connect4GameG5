@@ -55,8 +55,48 @@
     @await RenderSectionAsync("Scripts", required: false)
     <script src="~/js/Tablero.js"></script>
 
-    @await Html.PartialAsync("_CreatePlayerModal")
+@* @model JugadorModel
+<div id="modalCrearJugador" class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal_jugador">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel"><i class="bi bi-person-fill-add"></i> Crear Jugador</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+        <form id="formCrearJugador" asp-controller="Jugador" asp-action="Create" method="post">
+          <div class="form-group mb-4">
+            <label asp-for="Identificacion">Cédula</label>
+            <input asp-for="Identificacion" class="form-control" />
+            <span asp-validation-for="Identificacion" class="text-danger"></span>
+          </div>
 
+          <div class="form-group mb-4">
+            <label asp-for="Nombre">Nombre</label>
+            <input asp-for="Nombre" class="form-control" />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn modal_jugador_button" style="background-color: #;">Guardar</button>
+          </div>
+        </form>
+      </div>
+
+        </div>
+    </div>
+</div> *@
+    @await Html.PartialAsync("_CreatePlayerModal")
+@*
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
+        modal.show();
+    });
+</script>
+
+ 
     <script>
       // ¡Delegado! Para que no se pierda al reemplazar el HTML del modal
       $(document).on('submit', '#formCrearJugador', function (e) {
@@ -72,7 +112,16 @@
                 myModal.show();
             });
       });
-    </script>
+    </script> *@
+    <script>
+    $(document).ready(function () {
+        var mostrar = @((ViewData["MostrarModal"] != null && (bool)ViewData["MostrarModal"]) ? "true" : "false");
+        if (mostrar === "true") {
+            var modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
+            modal.show();
+        }
+    });
+</script>
 </body>
 
 

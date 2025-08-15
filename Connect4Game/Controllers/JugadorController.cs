@@ -30,13 +30,15 @@ namespace Connect4Game.Controllers
                 if (_context.Jugadores.Any(j => j.Identificacion == jugador.Identificacion))
                 {
                     ModelState.AddModelError("Identificacion", "La identificación ya existe.");
-                    return PartialView("_CreatePlayerModal", jugador);
+                    ViewBag.MostrarModal = true;
+TempData["Mensaje"] = "La identificación ya existe.";
+                   return View("Index", jugador);
                 }
                 _context.Jugadores.Add(jugador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return PartialView("_CreatePlayerModal", jugador);
+            return View("Index", jugador);
         }
 
         public IActionResult CreateModal()

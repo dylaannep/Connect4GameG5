@@ -8,6 +8,51 @@
 <button class="button-48 bg-add" role="button" data-bs-toggle="modal"
                                 data-bs-target="#modalCrearJugador"><span
                     class="text">Añadir <i class="fa-solid fa-plus"></i></span></button>
-
+<p>@ViewData["MostrarModal"]</p>
+<p>@ViewBag.MostrarModal</p>
 <!-- Tabla de marcadores -->
 @await Html.PartialAsync("_CreatePlayerModal")
+
+
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const abrirModal = urlParams.get('modal');
+    if (abrirModal === 'true') {
+        const modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
+        modal.show();
+    }
+});
+</script> 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var mostrar = @((ViewBag.MostrarModal != null && (bool)ViewBag.MostrarModal) ? "true" : "false");
+        if (mostrar) {
+            var modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
+            modal.show();
+        }
+    });
+</script>
+
+@* 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1 Verificar ViewBag
+    var mostrar = @((ViewBag.MostrarModal != null && (bool)ViewBag.MostrarModal) ? "true" : "false");
+
+    // 2 Si ViewBag no indica abrir modal, revisar query string
+    if (mostrar !== "true") {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('modal') === 'true') {
+            mostrar = "true";
+        }
+    }
+
+    // 3 Mostrar el modal si corresponde
+    if (mostrar === "true") {
+        const modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
+        modal.show();
+    }
+});
+</script> *@
