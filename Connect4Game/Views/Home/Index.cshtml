@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Grupo 4";
 }
 <div class="animated bounceInDown">
     <h1 class="game-heading">Bienvenido a Conecta 4</h1>
@@ -7,18 +7,21 @@
 
     <div class="row justify-content-center mt-4">
         <div class="col-md-2 mb-3">
-            <a href="/Partida/Crear" class="btn btn-game btn-primary w-100">🎯 Crear Partida</a>
-        </div>
-        <div class="col-md-2 mb-3">
             <a asp-controller="Jugador" asp-action="Index" asp-route-modal="true" class="btn btn-game btn-secondary w-100">
     👥 Crear Jugador
 </a>
         </div>
+
         <div class="col-md-2 mb-3">
-            <a href="/Partida/Registro" class="btn btn-game btn-info w-100">📜 Partidas Registro </a>
+            <a asp-controller="Game" asp-action="CrearPartida" class="btn btn-game btn-primary w-100">🎯 Crear Partida</a>
+        </div>
+        
+
+        <div class="col-md-2 mb-3">
+            <a href="/Partida/Registro" class="btn btn-game btn-info w-100">📜 Cargar Partida </a>
         </div>
         <div class="col-md-2 mb-3">
-            <a asp-controller="Jugador" asp-action="Index" class="btn btn-game btn-success w-100">🏆 Marcadores</a>
+            <a asp-controller="Jugador" asp-action="Index" class="btn btn-game btn-success w-100 h-100">🏆 Marcadores</a>
         </div>
     </div>
 

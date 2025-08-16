@@ -3,6 +3,12 @@ const columnas = 7;
 let turno = 1;
 let juegoTerminado = false;
 const tablero = Array(filas).fill().map(() => Array(columnas).fill(0));
+console.log(tablero);
+//console.log(jugador1.Nombre);
+console.log("Desde Tablero.js");
+console.log("Jugador 1:", jugador1);
+console.log("Jugador 2:", jugador2);
+console.log("Partida ID:", partidaIdcs);
 
 function jugar(columna) {
     if (juegoTerminado) return;
@@ -13,9 +19,29 @@ function jugar(columna) {
 
             colocarFicha(fila, columna, turno); // Sin animación
 
+            // Actualiza el tablero a la BD con AJAX
+            fetch(`/Game/ActualizarTablero`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    partidaId: partidaIdcs, // Asegúrate de que el ID de la partida esté disponible
+                    tablero: tablero,
+                    turno: turno,
+                })
+            })
+            .then(response => { response.json(); })
+            .then(data => {
+                console.log("Tablero actualizado en la BD:", data);
+            })
+            .catch(error => {
+                console.error("Error al actualizar el tablero:", error);
+            });
+
+
             if (verificarVictoria(fila, columna, turno)) {
                 juegoTerminado = true;
-                setTimeout(() => alert(`¡Ganó el Jugador ${turno} (${turno === 1 ? "Rojo" : "Amarillo"})!`), 100);
+                const jugadorGanador = turno === 1 ? jugador1 : jugador2;
+                setTimeout(() => alert(`¡Ganó el Jugador ${jugadorGanador.nombre} (${jugadorGanador.color})!`), 100);
                 return;
             }
 
@@ -46,7 +72,8 @@ function colocarFicha(fila, columna, jugador) {
 
 function cambiarTurno() {
     turno = turno === 1 ? 2 : 1;
-    document.getElementById("turnoActual").textContent = `Jugador ${turno} (${turno === 1 ? "Rojo" : "Amarillo"})`;
+    document.getElementById("turnoActual").textContent = `Jugador ${turno} (${turno === 1 ? jugador1.nombre : jugador2.nombre}
+    (${turno === 1 ? jugador1.color : jugador2.color}))`;
 }
 
 function verificarVictoria(fila, columna, jugador) {

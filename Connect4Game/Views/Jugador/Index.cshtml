@@ -25,7 +25,10 @@
                         <th>Identificación</th>
                         <th>Nombre</th>
                         <th>Marcador</th>
-                        <th>Victorias</th>
+                        <th>|</th>
+                        <th>Ganadas</th>
+                        <th>Perdidas</th>
+                        <th>Empatadas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +38,10 @@
                             <td>@jugador.Identificacion</td>
                             <td>@jugador.Nombre</td>
                             <td>@jugador.Marcador</td>
+                            <td>|</td>
                             <td>@jugador.Victorias</td>
+                            <td>@jugador.Derrotas</td>
+                            <td>@jugador.Empates</td>
                         </tr>
                     }
                 </tbody>
@@ -45,7 +51,7 @@
 </div>
 
 
-@await Html.PartialAsync("_CreatePlayerModal", new JugadorModel())
+@await Html.PartialAsync("_CreatePlayerModal", Model.NuevoJugador)
 
 
 <script>

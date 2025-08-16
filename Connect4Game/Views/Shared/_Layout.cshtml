@@ -29,7 +29,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link inicio" asp-controller="Home" asp-action="Index">Inicio |</a></li>
-                        <li class="nav-item"><a class="nav-link marcadores" asp-controller="Home" asp-action="Privacy">Marcadores |</a></li>
+                        <li class="nav-item"><a class="nav-link marcadores" asp-controller="Jugador" asp-action="Index">Marcadores |</a></li>
                         <li class="nav-item"><a class="nav-link partidas" asp-controller="Home" asp-action="Privacy">Partidas Registradas |</a></li>
                         <li class="nav-item"><a class="nav-link crear-partida" asp-controller="Home" asp-action="Privacy">Crear Partida</a></li>
                     </ul>
@@ -53,7 +53,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script src="~/js/Tablero.js"></script>
+    @* <script src="~/js/Tablero.js"></script> *@
 
 @* @model JugadorModel
 <div id="modalCrearJugador" class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -113,15 +113,7 @@
             });
       });
     </script> *@
-    <script>
-    $(document).ready(function () {
-        var mostrar = @((ViewData["MostrarModal"] != null && (bool)ViewData["MostrarModal"]) ? "true" : "false");
-        if (mostrar === "true") {
-            var modal = new bootstrap.Modal(document.getElementById('modalCrearJugador'));
-            modal.show();
-        }
-    });
-</script>
+    
 </body>
 
 

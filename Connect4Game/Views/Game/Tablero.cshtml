@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Partida Connect4";
 }
+@model PartidaModel
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 
@@ -9,6 +10,18 @@
 <!-- Tabla del tablero centrada -->
 <div class="text-center">
     <table id="tablero">
+        <thead>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+            </tr>
+        </thead>
+        <tbody>
         @for (int fila = 0; fila < 6; fila++)
         {
             <tr>
@@ -20,5 +33,24 @@
                 }
             </tr>
         }
+        </tbody>
     </table>
 </div>
+
+
+<script>
+    const partidaIdcs = @Model.Id;
+    const jugador1 = {
+        id: @Model.Jugador1.Id,
+        nombre: '@Model.Jugador1.Nombre',
+        color: 'rojo'
+    };
+
+    const jugador2 = {
+        id: @Model.Jugador2.Id,
+        nombre: '@Model.Jugador2.Nombre',
+        color: 'amarillo'
+    };
+</script>
+
+<script src="~/js/Tablero.js"></script>

@@ -20,15 +20,15 @@ namespace Connect4Game.Controllers
         */
         public async Task<IActionResult> Index()
         {
-            ViewData["Title"] = "Lista de Jugadores";
+            //ViewData["Title"] = "Lista de Jugadores";
 
             var jugadores_vm = new JugadorViewModel
             {
-                Jugadores = await _context.Jugadores.ToListAsync(),
+                Jugadores = await _context.Jugadores.OrderByDescending(j => j.Marcador).ToListAsync(),
                 NuevoJugador = new JugadorModel()
             };
             return View(jugadores_vm);
-            
+
         }
 
 
@@ -37,27 +37,39 @@ namespace Connect4Game.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Nombre,Identificacion")] JugadorModel jugador)
-public async Task<IActionResult> Create(JugadorModel jugador)
+        public async Task<IActionResult> Create(JugadorModel jugador)
         {
+            // Verificar si el modelo es válido
             if (ModelState.IsValid)
             {
                 //Verificar si la identificación ya existe
                 if (_context.Jugadores.Any(j => j.Identificacion == jugador.Identificacion))
                 {
+                    // Si la identificación ya existe, agregar un error al modelo
                     ModelState.AddModelError("Identificacion", "La identificación ya existe.");
-                    ViewBag.MostrarModal = true;
-                    //TempData["Mensaje"] = "La identificación ya existe.";
-                    return View("Index", jugador);
+                    // Dejar el modal abierto
+                    //ViewBag.MostrarModal = true;
+                    // Retornar la vista con el modelo actualizado
+                    //return View("Index", jugador);
                 }
-                _context.Jugadores.Add(jugador);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                else
+                {
+                    _context.Jugadores.Add(jugador);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+
             }
-            else
+            // Si el modelo no es válido, retornar la vista con el modelo actualizado
+            var jugadores_vm = new JugadorViewModel
             {
-                 ViewBag.MostrarModal = true;
-            }
-            return View("Index", jugador);
+                Jugadores = await _context.Jugadores.ToListAsync(),
+                NuevoJugador = jugador
+            };
+            // Dejar el modal abierto
+            ViewBag.MostrarModal = true;
+            // Retornar la vista con el modelo actualizado
+            return View("Index", jugadores_vm);
         }
 
         public IActionResult CreateModal()

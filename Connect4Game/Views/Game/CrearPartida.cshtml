@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Crear Partida Connect4";
+    Layout = "_Layout";
+    var jugadores = ViewBag.Jugadores as List<JugadorModel>;
+}
+@model PartidaModel
+@if (ViewBag.ErrorMismoJugador != null)
+{
+    <span class="text-danger">@ViewBag.ErrorMismoJugador</span>
+}
+
+<div>
+    <form asp-action="CrearPartida" method="post">
+        <div class="mb-3">
+            <label for="jugador1Id" class="form-label">Jugador 1</label>
+            <select id="jugador1Id" name="jugador1Id" class="form-select">
+                <option value="">Seleccione un jugador</option>
+                @foreach (var jugador in jugadores)
+                {
+                    <option value="@jugador.Id">@jugador.Nombre</option>
+                }
+            </select>
+            <span asp-validation-for="Jugador1Id" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="jugador2Id" class="form-label">Jugador 2</label>
+            <select id="jugador2Id" name="jugador2Id" class="form-select">
+                <option value="">Seleccione un jugador</option>
+                @foreach (var jugador in jugadores)
+                {
+                    <option value="@jugador.Id">@jugador.Nombre</option>
+                }
+            </select>
+             <span asp-validation-for="Jugador1Id" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Partida</button>
+    </form>
+</div>
