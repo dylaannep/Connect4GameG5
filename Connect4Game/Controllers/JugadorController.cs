@@ -24,7 +24,7 @@ namespace Connect4Game.Controllers
 
             var jugadores_vm = new JugadorViewModel
             {
-                Jugadores = await _context.Jugadores.OrderByDescending(j => j.Marcador).ToListAsync(),
+                Jugadores = await _context.Jugadores.OrderByDescending(j => j.Marcador).ToListAsync(), // Lista de jugadores ordenada por marcador
                 NuevoJugador = new JugadorModel()
             };
             return View(jugadores_vm);

@@ -72,15 +72,126 @@ namespace Connect4Game.Controllers
             partida.Tablero = System.Text.Json.JsonSerializer.Serialize(model.Tablero);
             System.Console.WriteLine(partida.Tablero);
             partida.TurnoGuardado = model.Turno;
-            
-            _context.Partidas.Update(partida);
+
+            var matriz = ToRectangular(model.Tablero); // int[,] de 6x7
+
+
+            // Verificar ganador
+            int ganadorJugador = VerificarGanador(matriz); // 0, 1 o 2
+            var jugador1 = await _context.Jugadores.FindAsync(partida.Jugador1Id);
+            var jugador2 = await _context.Jugadores.FindAsync(partida.Jugador2Id);
+
+            if (ganadorJugador != 0)
+            {
+                // Mapear 1/2 -> Id real
+                int ganadorId = (ganadorJugador == 1) ? partida.Jugador1Id : partida.Jugador2Id;
+
+                partida.GanadorId = ganadorId;
+                partida.Estado = EstadoPartida.Finalizada;
+
+                if (ganadorJugador == 1)
+                {
+                    jugador1.Marcador += 1;
+                    jugador1.Victorias += 1;
+
+                    jugador2.Marcador -= 1;
+                    jugador2.Derrotas += 1;
+                }
+                else
+                {
+                    jugador2.Marcador += 1;
+                    jugador2.Victorias += 1;
+
+                    jugador1.Marcador -= 1;
+                    jugador1.Derrotas += 1;
+                }
+            }
+            else if (EsEmpate(matriz))
+            {
+                // Empate: finalizar partida y sumar empates (marcador no cambia)
+                partida.Estado = EstadoPartida.Finalizada;
+                jugador1.Empates += 1;
+                jugador2.Empates += 1;
+            }
+
             await _context.SaveChangesAsync();
-            System.Console.WriteLine(partida.TurnoGuardado);
-            //System.Console.WriteLine(partida.Tablero);
 
+            return Ok(new
+            {
+                success = true,
+                estado = partida.Estado.ToString(),
+                ganadorId = partida.GanadorId // null si no hay ganador todavía
+            });
 
-
-            return Ok(new { success = true });
         }
+
+        private int VerificarGanador(int[,] tablero)
+        {
+            int filas = tablero.GetLength(0);
+            int cols = tablero.GetLength(1);
+
+            // Recorremos todas las posiciones del tablero para identificar si hay un ganador
+            for (int f = 0; f < filas; f++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    int jugador = tablero[f, c];
+                    if (jugador == 0) continue;
+
+                    // Fichas en Horizontal
+                    if (c + 3 < cols &&
+                        tablero[f, c + 1] == jugador &&
+                        tablero[f, c + 2] == jugador &&
+                        tablero[f, c + 3] == jugador)
+                        return jugador;
+
+                    // Fichas en Vertical
+                    if (f + 3 < filas &&
+                        tablero[f + 1, c] == jugador &&
+                        tablero[f + 2, c] == jugador &&
+                        tablero[f + 3, c] == jugador)
+                        return jugador;
+
+                    // Fichas en Diagonal ↘
+                    if (f + 3 < filas && c + 3 < cols &&
+                        tablero[f + 1, c + 1] == jugador &&
+                        tablero[f + 2, c + 2] == jugador &&
+                        tablero[f + 3, c + 3] == jugador)
+                        return jugador;
+
+                    // Fichas en Diagonal ↙
+                    if (f + 3 < filas && c - 3 >= 0 &&
+                        tablero[f + 1, c - 1] == jugador &&
+                        tablero[f + 2, c - 2] == jugador &&
+                        tablero[f + 3, c - 3] == jugador)
+                        return jugador;
+                }
+            }
+
+            return 0; // 0 = nadie ha ganado
+        }
+
+        private bool EsEmpate(int[,] tablero)
+        {
+            int filas = tablero.GetLength(0);
+            int cols = tablero.GetLength(1);
+            for (int f = 0; f < filas; f++)
+                for (int c = 0; c < cols; c++)
+                    if (tablero[f, c] == 0) return false;
+            return true;
+        }
+
+        // Aca habian dos opciones por un Int como esta en el DTO o cambiar el dto y el metodo ToRectangular por int[][]
+        private static int[,] ToRectangular(List<List<int>> jagged)
+        {
+            int rows = jagged.Count;
+            int cols = jagged[0].Count;
+            var rect = new int[rows, cols];
+            for (int r = 0; r < rows; r++)
+                for (int c = 0; c < cols; c++)
+                    rect[r, c] = jagged[r][c];
+            return rect;
+        }
+
     }
 }

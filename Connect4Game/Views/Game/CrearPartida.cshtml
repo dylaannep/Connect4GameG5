@@ -17,7 +17,7 @@
                 <option value="">Seleccione un jugador</option>
                 @foreach (var jugador in jugadores)
                 {
-                    <option value="@jugador.Id">@jugador.Nombre</option>
+                    <option value="@jugador.Id">@jugador.Nombre (@jugador.Identificacion)</option>
                 }
             </select>
             <span asp-validation-for="Jugador1Id" class="text-danger"></span>
@@ -29,7 +29,7 @@
                 <option value="">Seleccione un jugador</option>
                 @foreach (var jugador in jugadores)
                 {
-                    <option value="@jugador.Id">@jugador.Nombre</option>
+                    <option value="@jugador.Id">@jugador.Nombre (@jugador.Identificacion)</option>
                 }
             </select>
              <span asp-validation-for="Jugador1Id" class="text-danger"></span>
@@ -38,3 +38,33 @@
         <button type="submit" class="btn btn-primary">Crear Partida</button>
     </form>
 </div>
+
+<script>
+    const jugador1Select = document.getElementById("jugador1Id");
+    const jugador2Select = document.getElementById("jugador2Id");
+
+    function actualizarOpciones() {
+        const seleccionado1 = jugador1Select.value;
+        const seleccionado2 = jugador2Select.value;
+
+        // Habilitar todo primero
+        [...jugador1Select.options].forEach(opt => opt.disabled = false);
+        [...jugador2Select.options].forEach(opt => opt.disabled = false);
+
+        // Deshabilitar seleccionados en la otra lista
+        if (seleccionado1) {
+            [...jugador2Select.options].forEach(opt => {
+                if (opt.value === seleccionado1) opt.disabled = true;
+            });
+        }
+
+        if (seleccionado2) {
+            [...jugador1Select.options].forEach(opt => {
+                if (opt.value === seleccionado2) opt.disabled = true;
+            });
+        }
+    }
+
+    jugador1Select.addEventListener("change", actualizarOpciones);
+    jugador2Select.addEventListener("change", actualizarOpciones);
+</script>
