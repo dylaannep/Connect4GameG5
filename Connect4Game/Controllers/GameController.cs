@@ -21,10 +21,13 @@ namespace Connect4Game.Controllers
         public IActionResult RegistroPartida()
         {
             var partidas = _context.Partidas
-            .Include(p => p.Jugador1.Nombre)
-            .Include(p => p.Jugador2.Nombre)
-            .Include(p => p.Ganador.Nombre)
+            .Include(p => p.Jugador1)
+            .Include(p => p.Jugador2)
+            .Include(p => p.Ganador)
+            .OrderByDescending(p => p.Fecha)
             .ToList();
+
+            //System.Console.WriteLine("Partidas: " + partidas.Count);
 
             return View(partidas);
 

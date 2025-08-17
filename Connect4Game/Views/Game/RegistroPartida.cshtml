@@ -35,7 +35,14 @@
                             <td>@partida.Jugador1.Nombre</td>
                             <td>@partida.Jugador2.Nombre</td>
                             <td>@partida.Estado</td>
-                            <td>@partida.GanadorId</td>
+                            @if (partida.Ganador == null)
+                            {
+                                <td>En juego</td>
+                            }
+                            else
+                            {
+                                <td>@partida.Ganador.Nombre</td>
+                            }
                             <td>@partida.Fecha</td>
                             <td> <a asp-controller="Game" asp-action="VerPartida" asp-route-id="@partida.Id">Ver Partida</a></td>
                         </tr>
