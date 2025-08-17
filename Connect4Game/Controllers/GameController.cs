@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Connect4Game.Controllers
 {
@@ -15,6 +16,21 @@ namespace Connect4Game.Controllers
             ViewBag.JugadorActual = "Jugador 1"; // Simulado
             return View();
         }
+
+        [HttpGet]
+        public IActionResult RegistroPartida()
+        {
+            var partidas = _context.Partidas
+            .Include(p => p.Jugador1.Nombre)
+            .Include(p => p.Jugador2.Nombre)
+            .Include(p => p.Ganador.Nombre)
+            .ToList();
+
+            return View(partidas);
+
+
+        }
+
 
         [HttpGet]
         public IActionResult CrearPartida()
