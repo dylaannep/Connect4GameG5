@@ -1,0 +1,33 @@
+@model VerPartidaViewModel
+@{
+    ViewData["Title"] = "Detalle Partida";
+}
+
+<div class="container mt-4">
+    <h2>Partida entre @Model.Partida.Jugador1.Nombre y @Model.Partida.Jugador2.Nombre</h2>
+    <p><strong>Estado:</strong> @Model.Partida.Estado</p>
+    <p><strong>Turno Actual:</strong> 
+        @(Model.TurnoActual == Model.Partida.Jugador1Id 
+            ? Model.Partida.Jugador1.Nombre 
+            : Model.Partida.Jugador2.Nombre)
+    </p>
+    <p><strong>Fecha:</strong> @Model.Partida.Fecha.ToString("dd/MM/yyyy HH:mm")</p>
+
+    <h3>Tablero</h3>
+    <table class="table table-bordered text-center">
+        @for (int i = 0; i < Model.Tablero.GetLength(0); i++)
+        {
+            <tr>
+                @for (int j = 0; j < Model.Tablero.GetLength(1); j++)
+                {
+                    var celda = Model.Tablero[i, j];
+                    string contenido = celda == 0 ? "" : 
+                                       (celda == Model.Partida.Jugador1Id ? "⚪" : "🔴");
+                    <td style="width:50px; height:50px;">@contenido</td>
+                }
+            </tr>
+        }
+    </table>
+
+    <a asp-action="RegistroPartida" class="btn btn-secondary">Volver</a>
+</div>

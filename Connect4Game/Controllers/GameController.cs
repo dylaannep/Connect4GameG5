@@ -34,6 +34,35 @@ namespace Connect4Game.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult VerPartida(int id)
+        {
+            var partida = _context.Partidas
+                .Include(p => p.Jugador1)
+                .Include(p => p.Jugador2)
+                .Include(p => p.Ganador)
+                .FirstOrDefault(p => p.Id == id);
+
+            if (partida == null)
+            {
+                return NotFound();
+            }
+
+            // se deserializa
+            var tablero = string.IsNullOrEmpty(partida.Tablero)
+                ? new int[6, 7]
+                : ToRectangular(System.Text.Json.JsonSerializer.Deserialize<List<List<int>>>(partida.Tablero));
+
+            var vm = new VerPartidaViewModel
+            {
+                Partida = partida,
+                Tablero = tablero,
+                TurnoActual = partida.TurnoGuardado
+            };
+
+            return View(vm);
+        }
+
 
         [HttpGet]
         public IActionResult CrearPartida()
