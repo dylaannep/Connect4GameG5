@@ -18,10 +18,12 @@ namespace Connect4Game.Controllers
                     return View();
                 }
         */
+        // Acción para mostrar la lista de jugadores
         public async Task<IActionResult> Index()
         {
             //ViewData["Title"] = "Lista de Jugadores";
-
+// Traer la lista de jugadores desde la base de datos y ordenarla por marcador
+            // También inicializar el modelo para un nuevo jugador
             var jugadores_vm = new JugadorViewModel
             {
                 Jugadores = await _context.Jugadores.OrderByDescending(j => j.Marcador).ToListAsync(), // Lista de jugadores ordenada por marcador
@@ -34,6 +36,7 @@ namespace Connect4Game.Controllers
 
 
 
+// Acción para crear un nuevo jugador
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Nombre,Identificacion")] JugadorModel jugador)
