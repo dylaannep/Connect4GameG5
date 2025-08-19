@@ -3,6 +3,42 @@
     ViewData["Title"] = "Detalle Partida";
 }
 
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<p class="text-center">Turno del Jugador: <strong id="turnoActual">Jugador 1 (Rojo)</strong></p>
+
+
+<div class="text-center">
+    <table id="tablero">
+        <thead>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (int fila = 0; fila < 6; fila++)
+        {
+            <tr>
+                @for (int col = 0; col < 7; col++)
+                {
+                    <td id="celda-@fila-@col" onclick="jugar(@col)">
+                        <div class="disco-base"></div>
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@* 
 <div class="container mt-4">
     <h2>Partida entre @Model.Partida.Jugador1.Nombre y @Model.Partida.Jugador2.Nombre</h2>
     <p><strong>Estado:</strong> @Model.Partida.Estado</p>
@@ -30,4 +66,25 @@
     </table>
 
     <a asp-action="RegistroPartida" class="btn btn-secondary">Volver</a>
-</div>
+</div> *@
+
+<script>
+const partidaIdcs = @Model.Partida.Id;
+const jugador1 = {
+    id: @Model.Partida.Jugador1Id,
+    nombre: '@Model.Partida.Jugador1.Nombre',
+    color: 'rojo'
+};
+const jugador2 = {
+    id: @Model.Partida.Jugador2Id,
+    nombre: '@Model.Partida.Jugador2.Nombre',
+    color: 'amarillo'
+};
+let turno = @Model.TurnoActual ?? 1; // si viene null, arranca en 1
+const tableroGuardado = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Tablero));
+const estadoPartida = '@Model.Partida.Estado';
+
+let juegoTerminado = false;
+</script>
+
+<script src="~/js/Tablero.js"></script>

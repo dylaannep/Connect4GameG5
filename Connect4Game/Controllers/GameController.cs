@@ -49,9 +49,9 @@ namespace Connect4Game.Controllers
             }
 
             // se deserializa
-            var tablero = string.IsNullOrEmpty(partida.Tablero)
-                ? new int[6, 7]
-                : ToRectangular(System.Text.Json.JsonSerializer.Deserialize<List<List<int>>>(partida.Tablero));
+             var tablero = string.IsNullOrEmpty(partida.Tablero)
+            ? CrearTableroVacio()
+            : System.Text.Json.JsonSerializer.Deserialize<List<List<int>>>(partida.Tablero);
 
             var vm = new VerPartidaViewModel
             {
@@ -61,6 +61,11 @@ namespace Connect4Game.Controllers
             };
 
             return View(vm);
+        }
+
+        private List<List<int>> CrearTableroVacio()
+        {
+            return Enumerable.Range(0, 6).Select(_ => Enumerable.Repeat(0, 7).ToList()).ToList();
         }
 
 
