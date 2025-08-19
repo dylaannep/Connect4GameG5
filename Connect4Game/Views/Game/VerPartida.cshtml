@@ -6,6 +6,35 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 
+
+@if (Model.Partida.Estado == EstadoPartida.Finalizada)
+{
+    <div class="alert alert-success text-center">
+        <h3>¡Partida finalizada!</h3>
+        @if (Model.Partida.GanadorId.HasValue)
+        {
+            <p>Ganador:
+                @if (Model.Partida.GanadorId == Model.Partida.Jugador1Id)
+                {
+                <p class="text-center"><strong>
+                        @Model.Partida.Jugador1.Nombre (Rojo)
+                    </strong></p>
+            }
+            else
+            {
+                <p class="text-center"><strong>
+                        @Model.Partida.Jugador2.Nombre (Amarillo)
+                    </strong></p>
+            }
+            </p>
+        }
+        else
+        {
+            <p>La partida terminó en empate.</p>
+        }
+    </div>
+}else{
+
 @if (Model.TurnoGuardado == 1)
 {
     <p class="text-center">Turno del Jugador: <strong id="turnoActual">
@@ -18,6 +47,8 @@ else
             @Model.Partida.Jugador2.Nombre (Amarillo)
         </strong></p>
 }
+}
+
 
 
 
@@ -109,7 +140,7 @@ else
         color: 'amarillo'
     };
     let turno = @Model.TurnoGuardado ?? 1; // si viene null, arranca en 1
-    console.log("Turno actual: " + turno);
+    console.log("Turno guardado-------: " + turno);
     const tableroGuardado = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Tablero));
     const estadoPartida = '@Model.Partida.Estado';
 

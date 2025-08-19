@@ -146,9 +146,12 @@ namespace Connect4Game.Controllers
 
             partida.Tablero = System.Text.Json.JsonSerializer.Serialize(model.Tablero);
             System.Console.WriteLine(partida.Tablero);
-            partida.TurnoGuardado = model.Turno;
+            // Si el turno actual es 1, el siguiente será 2; si es 2, el siguiente será 1
+            partida.TurnoGuardado = model.Turno == 1 ? 2 : 1;
 
             var matriz = ToRectangular(model.Tablero); // int[,] de 6x7
+
+            System.Console.WriteLine("Turno guardado: " + partida.TurnoGuardado);
 
 
             // Verificar ganador
@@ -190,12 +193,14 @@ namespace Connect4Game.Controllers
             }
 
             await _context.SaveChangesAsync();
+            System.Console.WriteLine("Turno guardado después de actualizar: " + partida.TurnoGuardado);
 
             return Ok(new
             {
                 success = true,
                 estado = partida.Estado.ToString(),
-                ganadorId = partida.GanadorId // null si no hay ganador todavía
+                ganadorId = partida.GanadorId, // null si no hay ganador todavía
+                turno = partida.TurnoGuardado,
             });
 
         }

@@ -54,21 +54,41 @@ function jugar(columna) {
 
             // Actualiza el tablero a la BD con AJAX
             fetch(`/Game/ActualizarTablero`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    partidaId: partidaIdcs, // Asegúrate de que el ID de la partida esté disponible
-                    tablero: tablero,
-                    turno: turno,
-                })
-            })
-            .then(response => { response.json(); })
-            .then(data => {
-                console.log("Tablero actualizado en la BD:", data);
-            })
-            .catch(error => {
-                console.error("Error al actualizar el tablero:", error);
-            });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        partidaId: partidaIdcs,
+        tablero: tablero,
+        turno: turno,
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log("Respuesta del backend:", data);
+
+    if (data.success) {
+        if (data.estado === "Finalizada") {
+            juegoTerminado = true;
+            if (data.ganadorId) {
+                const jugadorGanador = (data.ganadorId === jugador1.id ? jugador1 : jugador2);
+                //alert(`¡Ganó ${jugadorGanador.nombre}!`);
+            } else {
+                //alert("¡Empate!");
+            }
+        } else {
+            // ahora usamos el turno que trae la BD 👇
+            turno = data.turno;
+            const jugador = turno === 1 ? jugador1 : jugador2;
+            document.getElementById("turnoActual").textContent =
+                `${jugador.nombre} (${jugador.color})`;
+        }
+    }
+})
+.catch(error => {
+    console.error("Error al actualizar el tablero:", error);
+});
+
+
 
 
             if (verificarVictoria(fila, columna, turno)) {
@@ -84,7 +104,7 @@ function jugar(columna) {
                 return;
             }
 
-            cambiarTurno();
+            //cambiarTurno();
             return;
         }
     }
