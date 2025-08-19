@@ -49,9 +49,9 @@ namespace Connect4Game.Controllers
             }
 
             // se deserializa
-             var tablero = string.IsNullOrEmpty(partida.Tablero)
-            ? CrearTableroVacio()
-            : System.Text.Json.JsonSerializer.Deserialize<List<List<int>>>(partida.Tablero);
+            var tablero = string.IsNullOrEmpty(partida.Tablero)
+           ? CrearTableroVacio()
+           : System.Text.Json.JsonSerializer.Deserialize<List<List<int>>>(partida.Tablero);
 
             var vm = new VerPartidaViewModel
             {
@@ -62,6 +62,26 @@ namespace Connect4Game.Controllers
 
             return View(vm);
         }
+
+        [HttpGet]
+        public IActionResult Reanudar(int id)
+        {
+            var partida = _context.Partidas
+                .AsNoTracking()
+                .FirstOrDefault(p => p.Id == id);
+
+            if (partida == null) return NotFound();
+
+            // Si ya terminó, solo muestra el detalle 
+            if (partida.Estado == EstadoPartida.Finalizada)
+                return RedirectToAction(nameof(VerPartida), new { id });
+
+            // Si está en curso se ve VerPartida que ya carga tablero
+            return RedirectToAction(nameof(VerPartida), new { id });
+        }
+
+
+
 
         private List<List<int>> CrearTableroVacio()
         {
@@ -110,8 +130,10 @@ namespace Connect4Game.Controllers
 
             _context.Partidas.Add(partida);
             await _context.SaveChangesAsync();
-
-            return View("Tablero", partida);
+            // ANTES:
+            // return View("Tablero", partida);
+            // AHORA:
+            return RedirectToAction(nameof(VerPartida), new { id = partida.Id });
         }
 
         public async Task<IActionResult> ActualizarTablero([FromBody] ActualizarTableroDTO model)

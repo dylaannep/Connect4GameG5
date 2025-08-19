@@ -8,15 +8,17 @@
 
 @if (Model.TurnoGuardado == 1)
 {
-    <p class="text-center">Turno del Jugador: <strong id="turnoActual">@Model.Partida.Jugador2.Nombre (Amarillo)</strong></p>
+    <p class="text-center">Turno del Jugador: <strong id="turnoActual">
+            @Model.Partida.Jugador1.Nombre (Rojo)
+        </strong></p>
 }
 else
 {
-    <p class="text-center">Turno del Jugador: <strong id="turnoActual">@Model.Partida.Jugador1.Nombre (Rojo)</strong></p>
+    <p class="text-center">Turno del Jugador: <strong id="turnoActual">
+            @Model.Partida.Jugador2.Nombre (Amarillo)
+        </strong></p>
 }
 
-<p class="text-center">Turno del Jugador: <strong id="turnoActual"></strong></p>
-</strong></p>
 
 
 <div class="text-center">
@@ -33,20 +35,36 @@ else
             </tr>
         </thead>
         <tbody>
-        @for (int fila = 0; fila < 6; fila++)
-        {
-            <tr>
-                @for (int col = 0; col < 7; col++)
-                {
-                    <td id="celda-@fila-@col" onclick="jugar(@col)">
-                        <div class="disco-base"></div>
-                    </td>
-                }
-            </tr>
-        }
+            @for (int fila = 0; fila < 6; fila++)
+            {
+                <tr>
+                    @for (int col = 0; col < 7; col++)
+                    {
+                        <td id="celda-@fila-@col" onclick="jugar(@col)">
+                            <div class="disco-base"></div>
+                        </td>
+                    }
+                </tr>
+            }
         </tbody>
     </table>
 </div>
+
+<div class="text-center mt-3 d-flex justify-content-center gap-2">
+    <a asp-action="RegistroPartida" class="btn btn-secondary">Volver</a>
+
+    @if (Model.Partida.Estado == EstadoPartida.Finalizada)
+    {
+        <div class="alert alert-info text-center">Esta partida ya finalizó.</div>
+    }
+
+
+    @if (Model.Partida.Estado == EstadoPartida.EnCurso)
+    {
+        <a asp-action="Reanudar" asp-route-id="@Model.Partida.Id" class="btn btn-primary">Reanudar</a>
+    }
+</div>
+
 
 @* 
 <div class="container mt-4">
@@ -79,21 +97,21 @@ else
 </div> *@
 
 <script>
-const partidaIdcs = @Model.Partida.Id;
-const jugador1 = {
-    id: @Model.Partida.Jugador1Id,
-    nombre: '@Model.Partida.Jugador1.Nombre',
-    color: 'rojo'
-};
-const jugador2 = {
-    id: @Model.Partida.Jugador2Id,
-    nombre: '@Model.Partida.Jugador2.Nombre',
-    color: 'amarillo'
-};
-let turno = @Model.TurnoGuardado ?? 1; // si viene null, arranca en 1
-console.log("Turno actual: " + turno);
-const tableroGuardado = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Tablero));
-const estadoPartida = '@Model.Partida.Estado';
+    const partidaIdcs = @Model.Partida.Id;
+    const jugador1 = {
+        id: @Model.Partida.Jugador1Id,
+        nombre: '@Model.Partida.Jugador1.Nombre',
+        color: 'rojo'
+    };
+    const jugador2 = {
+        id: @Model.Partida.Jugador2Id,
+        nombre: '@Model.Partida.Jugador2.Nombre',
+        color: 'amarillo'
+    };
+    let turno = @Model.TurnoGuardado ?? 1; // si viene null, arranca en 1
+    console.log("Turno actual: " + turno);
+    const tableroGuardado = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Tablero));
+    const estadoPartida = '@Model.Partida.Estado';
 
 </script>
 
