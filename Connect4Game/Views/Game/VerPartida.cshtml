@@ -7,6 +7,10 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 
 
+<div id="mensajePartida" class="alert d-none text-center" role="alert"></div>
+
+
+
 @if (Model.Partida.Estado == EstadoPartida.Finalizada)
 {
     <div class="alert alert-success text-center">

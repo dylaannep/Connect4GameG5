@@ -94,13 +94,15 @@ function jugar(columna) {
             if (verificarVictoria(fila, columna, turno)) {
                 juegoTerminado = true;
                 const jugadorGanador = turno === 1 ? jugador1 : jugador2;
-                setTimeout(() => alert(`¡Ganó el Jugador ${jugadorGanador.nombre} (${jugadorGanador.color})!`), 100);
+                mostrarMensaje("¡Ganó el jugador con ID " + jugadorGanador.nombre + "!", "success");
+                //setTimeout(() => alert(`¡Ganó el Jugador ${jugadorGanador.nombre} (${jugadorGanador.color})!`), 100);
                 return;
             }
 
             if (esEmpate()) {
                 juegoTerminado = true;
-                setTimeout(() => alert("¡Empate!"), 100);
+                mostrarMensaje("¡Empate!", "warning");
+                //setTimeout(() => alert("¡Empate!"), 100);
                 return;
             }
 
@@ -165,3 +167,16 @@ function esEmpate() {
     }
     return true;
 }
+
+
+function mostrarMensaje(mensaje, tipo = "primary") {
+    let mensajeDiv = document.getElementById("mensajePartida");
+
+    // Cambia el estilo según el tipo (success, danger, warning, etc.)
+    mensajeDiv.className = `alert alert-${tipo} text-center`;
+    mensajeDiv.textContent = mensaje;
+
+    // Mostrarlo (quita d-none)
+    mensajeDiv.classList.remove("d-none");
+}
+

@@ -49,7 +49,19 @@
 
                         <!-- Ganador -->
                         <td>
-                            @(partida.Ganador == null ? "En juego" : partida.Ganador.Nombre)
+                            @if (partida.Ganador != null)
+                            {
+                                <span class="badge bg-primary">@partida.Ganador.Nombre</span>
+                            }
+                            else if (partida.Ganador == null && partida.Estado == EstadoPartida.Finalizada)
+                            {
+                                <span class="badge bg-warning">Empate</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">En juego</span>
+                            }
+                            @* @(partida.Ganador == null || partida.Estado == EstadoPartida.Finalizada ? "En juego" : partida.Ganador.Nombre) *@
                         </td>
 
                         <!-- Fecha -->
