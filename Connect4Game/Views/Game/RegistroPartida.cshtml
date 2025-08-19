@@ -34,7 +34,19 @@
                         <tr class="text-light">
                             <td>@partida.Jugador1.Nombre</td>
                             <td>@partida.Jugador2.Nombre</td>
-                            <td>@partida.Estado</td>
+                            <td>@if (partida.Estado.Equals("EnCurso"))
+                                {
+                                    <span class="badge bg-warning text-dark">En Curso</span>
+                                }
+                                else if (partida.Estado == EstadoPartida.Finalizada)
+                                {
+                                    <span class="badge bg-success">Finalizada</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Pendiente</span>
+                                }
+                            </td>
                             @if (partida.Ganador == null)
                             {
                                 <td>En juego</td>

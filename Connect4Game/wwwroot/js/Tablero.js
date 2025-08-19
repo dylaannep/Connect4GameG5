@@ -1,39 +1,14 @@
 const filas = 6;
 const columnas = 7;
 let turno = 1;
-//const tablero = Array(filas).fill().map(() => Array(columnas).fill(0));
-
-// Si viene vacío o null → crear nuevo, sino usarlo
-const tablero = tableroGuardado && tableroGuardado.length > 0
-    ? tableroGuardado
-    : Array(filas).fill().map(() => Array(columnas).fill(0));
-
-
-    console.log(tablero);
+let juegoTerminado = false;
+const tablero = Array(filas).fill().map(() => Array(columnas).fill(0));
+console.log(tablero);
 //console.log(jugador1.Nombre);
 console.log("Desde Tablero.js");
 console.log("Jugador 1:", jugador1);
 console.log("Jugador 2:", jugador2);
-console.log("Turno inicial:", turno);
 console.log("Partida ID:", partidaIdcs);
-
-document.addEventListener("DOMContentLoaded", () => {
-    renderizarTablero(tablero);
-});
-function renderizarTablero(tablero) {
-    for (let fila = 0; fila < filas; fila++) {
-        for (let col = 0; col < columnas; col++) {
-            if (tablero[fila][col] !== 0) {
-                colocarFicha(fila, col, tablero[fila][col]);
-            } else {
-                // Celda vacía: ponemos el disco base
-                const celda = document.getElementById(`celda-${fila}-${col}`);
-                celda.innerHTML = '<div class="disco-base"></div>';
-            }
-        }
-    }
-}
-
 
 function jugar(columna) {
     if (juegoTerminado) return;

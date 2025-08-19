@@ -6,7 +6,17 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 
-<p class="text-center">Turno del Jugador: <strong id="turnoActual">Jugador 1 (Rojo)</strong></p>
+@if (Model.TurnoGuardado == 1)
+{
+    <p class="text-center">Turno del Jugador: <strong id="turnoActual">@Model.Partida.Jugador2.Nombre (Amarillo)</strong></p>
+}
+else
+{
+    <p class="text-center">Turno del Jugador: <strong id="turnoActual">@Model.Partida.Jugador1.Nombre (Rojo)</strong></p>
+}
+
+<p class="text-center">Turno del Jugador: <strong id="turnoActual"></strong></p>
+</strong></p>
 
 
 <div class="text-center">
@@ -80,11 +90,11 @@ const jugador2 = {
     nombre: '@Model.Partida.Jugador2.Nombre',
     color: 'amarillo'
 };
-let turno = @Model.TurnoActual ?? 1; // si viene null, arranca en 1
+let turno = @Model.TurnoGuardado ?? 1; // si viene null, arranca en 1
+console.log("Turno actual: " + turno);
 const tableroGuardado = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Tablero));
 const estadoPartida = '@Model.Partida.Estado';
 
-let juegoTerminado = false;
 </script>
 
-<script src="~/js/Tablero.js"></script>
+<script src="~/js/TableroCargar.js"></script>

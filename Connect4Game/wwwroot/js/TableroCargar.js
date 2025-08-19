@@ -1,6 +1,14 @@
 const filas = 6;
 const columnas = 7;
-let turno = 1;
+//let turno = 1;
+
+let juegoTerminado;
+if (estadoPartida === 'EnCurso') {
+    juegoTerminado = false; // La partida no ha terminado
+} else {
+    juegoTerminado = true; // La partida ya ha terminado
+}
+console.log("Desde TableroCargar.js" + estadoPartida);
 //const tablero = Array(filas).fill().map(() => Array(columnas).fill(0));
 
 // Si viene vacío o null → crear nuevo, sino usarlo

@@ -57,7 +57,7 @@ namespace Connect4Game.Controllers
             {
                 Partida = partida,
                 Tablero = tablero,
-                TurnoActual = partida.TurnoGuardado
+                TurnoGuardado = partida.TurnoGuardado
             };
 
             return View(vm);
