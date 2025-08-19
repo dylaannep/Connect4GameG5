@@ -93,11 +93,15 @@ else
         <div class="alert alert-info text-center">Esta partida ya finalizó.</div>
     }
 
-
+@*
     @if (Model.Partida.Estado == EstadoPartida.EnCurso)
     {
-        <a asp-action="Reanudar" asp-route-id="@Model.Partida.Id" class="btn btn-primary">Reanudar</a>
+         <a asp-action="Reanudar" asp-route-id="@Model.Partida.Id" class="btn btn-primary">Reanudar</a> 
     }
+*@
+    <div>
+        <a asp-controller="Game" asp-action="ReiniciarPartida" asp-route-id="@Model.Partida.Id" class="btn btn-warning">Reiniciar Partida</a>
+    </div>
 </div>
 
 

@@ -34,6 +34,43 @@ namespace Connect4Game.Controllers
 
         }
 
+
+        public async Task<IActionResult> ReiniciarPartida(int id)
+        {
+            var partida = await _context.Partidas.FindAsync(id);
+            if (partida == null)
+            {
+                return NotFound();
+            }
+
+            System.Console.WriteLine("jugador 1: " + partida.Jugador1Id);
+
+            var tableroVacio = System.Text.Json.JsonSerializer.Serialize(CrearTableroVacio());
+            System.Console.WriteLine("Tablero reiniciado: " + tableroVacio);
+            var partidaReiniciar = new PartidaModel
+            {
+                Jugador1Id = partida.Jugador1Id,
+                Jugador2Id = partida.Jugador2Id,
+                Tablero = tableroVacio,// Tablero vacío
+                TurnoGuardado = 1, // Comienza el jugador 1
+                Fecha = DateTime.Now,
+                Estado = EstadoPartida.EnCurso,
+                GanadorId = null, // Reiniciar ganador
+            };
+
+            System.Console.WriteLine("Reiniciando partida: " + partida.Id);
+
+            _context.Partidas.Add(partidaReiniciar);
+            await _context.SaveChangesAsync();
+
+            System.Console.WriteLine("Partida reiniciada: " + partida.Id);
+
+            // Redirigir a VerPartida para mostrar el tablero reiniciado
+            return RedirectToAction(nameof(VerPartida), new { id = partidaReiniciar.Id });
+
+        }
+
+
         [HttpGet]
         public IActionResult VerPartida(int id)
         {
