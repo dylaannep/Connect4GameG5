@@ -25,78 +25,75 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach (var partida in Model)
-                {
-                    <tr class="text-light">
-                        <td>@partida.Jugador1?.Nombre</td>
-                        <td>@partida.Jugador2?.Nombre</td>
+                    @foreach (var partida in Model)
+                    {
+                        <tr class="text-light">
+                            <td><span>@partida.Jugador1?.Nombre</span> <span>(@partida.Jugador1?.Identificacion)</span></td>
+                            <td><span>@partida.Jugador2?.Nombre</span> <span>(@partida.Jugador2?.Identificacion)</span></td>
 
-                        <!-- Estado con badge (usando enum, no string) -->
-                        <td>
-                            @if (partida.Estado == EstadoPartida.EnCurso)
-                            {
-                                <span class="badge bg-warning text-dark">En curso</span>
-                            }
-                            else if (partida.Estado == EstadoPartida.Finalizada)
-                            {
-                                <span class="badge bg-success">Finalizada</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">Pendiente</span>
-                            }
-                        </td>
+                            <!-- Estado con badge (usando enum, no string) -->
+                            <td>
+                                @if (partida.Estado == EstadoPartida.EnCurso)
+                                {
+                                    <span class="badge bg-warning text-dark">En curso</span>
+                                }
+                                else if (partida.Estado == EstadoPartida.Finalizada)
+                                {
+                                    <span class="badge bg-success">Finalizada</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Pendiente</span>
+                                }
+                            </td>
 
-                        <!-- Ganador -->
-                        <td>
-                            @if (partida.Ganador != null)
-                            {
-                                <span class="badge bg-primary">@partida.Ganador.Nombre</span>
-                            }
-                            else if (partida.Ganador == null && partida.Estado == EstadoPartida.Finalizada)
-                            {
-                                <span class="badge bg-warning">Empate</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">En juego</span>
-                            }
-                            @* @(partida.Ganador == null || partida.Estado == EstadoPartida.Finalizada ? "En juego" : partida.Ganador.Nombre) *@
-                        </td>
+                            <!-- Ganador -->
+                            <td>
+                                @if (partida.Ganador != null)
+                                {
+                                    <span class="badge bg-primary">@partida.Ganador.Nombre</span>
+                                }
+                                else if (partida.Ganador == null && partida.Estado == EstadoPartida.Finalizada)
+                                {
+                                    <span class="badge bg-warning">Empate</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">En juego</span>
+                                }
+                                @* @(partida.Ganador == null || partida.Estado == EstadoPartida.Finalizada ? "En juego" : partida.Ganador.Nombre) *@
+                            </td>
 
-                        <!-- Fecha -->
-                        <td>@partida.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                            <!-- Fecha -->
+                            <td>@partida.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
 
-                        <!-- Acciones -->
-                        <td class="text-nowrap">
-                            <a asp-controller="Game"
+                            <!-- Acciones -->
+                            <td class="text-nowrap">
+
+                                @* <a asp-controller="Game"
                                asp-action="VerPartida"
                                asp-route-id="@partida.Id"
                                class="btn btn-outline-light btn-sm me-2">
                                 Detalle
-                            </a>
+                            </a> *@
 
-                            @if (partida.Estado == EstadoPartida.EnCurso)
-                            {
-                                <a asp-controller="Game"
-                                   asp-action="Reanudar"
-                                   asp-route-id="@partida.Id"
-                                   class="btn btn-primary btn-sm">
-                                    Reanudar
-                                </a>
-                            }
-                            else
-                            {
-                                <a asp-controller="Game"
-                                   asp-action="VerPartida"
-                                   asp-route-id="@partida.Id"
-                                   class="btn btn-secondary btn-sm">
-                                    Ver tablero
-                                </a>
-                            }
-                        </td>
-                    </tr>
-                }
+                                @if (partida.Estado == EstadoPartida.EnCurso)
+                                {
+                                    <a asp-controller="Game" asp-action="Reanudar" asp-route-id="@partida.Id"
+                                        class="btn btn-primary btn-sm">
+                                        Reanudar
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Game" asp-action="VerPartida" asp-route-id="@partida.Id"
+                                        class="btn btn-secondary btn-sm">
+                                        Ver tablero
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
